@@ -22,7 +22,7 @@ const initialState: InitialState = {
       description: "create blog page",
       dueDate: "2025-1-10",
       isComplete: false,
-      priority: "High",
+      priority: "Low",
     },
   ],
 };
