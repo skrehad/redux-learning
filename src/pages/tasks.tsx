@@ -13,7 +13,7 @@ export default function Tasks() {
       </div>
       <div>
         {tasks.map((task) => (
-          <TaskCard></TaskCard>
+          <TaskCard task={task} />
         ))}
       </div>
     </div>
