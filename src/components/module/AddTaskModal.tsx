@@ -24,12 +24,16 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
+import { addTask } from "@/redux/features/task/taskSlice";
+import { useAppDispatch } from "@/redux/hook";
 
 export function AddTaskModal() {
   const form = useForm();
+  const dispatch = useAppDispatch();
 
-  const onSubmit = (data: string) => {
+  const onSubmit = (data) => {
     console.log(data);
+    dispatch(addTask(data));
   };
 
   return (
@@ -139,7 +143,9 @@ export function AddTaskModal() {
             />
 
             <DialogFooter>
-              <Button type="submit">Save changes</Button>
+              <Button className="mt-5" type="submit">
+                Save changes
+              </Button>
             </DialogFooter>
           </form>
         </Form>
