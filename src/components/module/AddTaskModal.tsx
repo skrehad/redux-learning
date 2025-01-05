@@ -24,21 +24,26 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
-import { addTask } from "@/redux/features/task/taskSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { ITask } from "@/types";
-import { selectUsers } from "@/redux/features/user/userSlice";
 import { useState } from "react";
+import { useCreateTaskMutation } from "@/redux/api/baseApi";
 
 export function AddTaskModal() {
   const [open, setOpen] = useState(false);
-  const users = useAppSelector(selectUsers);
   const form = useForm();
-  const dispatch = useAppDispatch();
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
-    dispatch(addTask(data as ITask));
+  const [createTask, { data }] = useCreateTaskMutation();
+  console.log(data);
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    // console.log(data);
+
+    const taskData = {
+      ...data,
+      isCompleted: false,
+    };
+    const res = await createTask(taskData).unwrap();
+    console.log(res);
+
     setOpen(false);
     form.reset();
   };
@@ -122,11 +127,11 @@ export function AddTaskModal() {
                         <SelectValue placeholder="Select a name to display" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
+                    {/* <SelectContent>
                       {users.map((user) => (
                         <SelectItem value={user.id}>{user.name}</SelectItem>
                       ))}
-                    </SelectContent>
+                    </SelectContent> */}
                   </Select>
                 </FormItem>
               )}
